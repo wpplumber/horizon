@@ -9,7 +9,7 @@ export interface PageProps {
 }
 
 export interface AccountPageProps {
-  pageType: 'orders' | 'subscriptions';
+  pageType: 'orders' | 'subscriptions' | 'addresses' | 'cards';
 }
 
 export type NextPageWithLayout<T = { children?: ReactElement }> =

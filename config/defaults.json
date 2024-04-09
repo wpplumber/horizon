@@ -87,6 +87,14 @@
   },
   "lang": {
     "account": {
+      "cards": {
+        "title": "Cards",
+        "navigation_title": "Cards"
+      },
+      "addresses": {
+        "title": "Addresses",
+        "navigation_title": "Addresses"
+      },
       "orders": {
         "title": "Orders & Returns",
         "navigation_title": "Orders & Returns",

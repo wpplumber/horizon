@@ -83,7 +83,7 @@ const OrderPaymentMethod: React.FC<OrderPaymentMethodProps> = ({
   return (
     <article className="flex flex-col space-y-0.5 text-md">
       <div className="flex items-center space-x-2">
-      {Logo && <Logo className="w-6" />}
+        {Logo && <Logo className="w-6" />}
         {card && (
           <>
             <span className="font-semibold text-primary">
