@@ -27,7 +27,6 @@ export default async function handler(
       });
 
       const data = response.results[0];
-      console.log('Account data', data);
       res.status(200).json({ account: data });
     } else if (req.method === 'POST') {
       // Placeholder for POST request logic
@@ -36,17 +35,11 @@ export default async function handler(
       // Placeholder for DELETE request logic
       res.status(501).json({ message: 'DELETE method not implemented' });
     } else if (req.method === 'PUT') {
-      const { id } = req.query;
-      console.log(`account id:${id}| email card id:${req.body.id}`);
       const newCard = req.body;
-      const accountModified = await swell.put(
-        `/accounts/${newCard.parent_id}`,
-        {
-          email: newCard.email,
-          $set: { 'billing.account_card_id': req.body.id },
-        },
-      );
-      console.log('Update account to add for billing', accountModified);
+      await swell.put(`/accounts/${newCard.parent_id}`, {
+        email: newCard.email,
+        $set: { 'billing.account_card_id': req.body.id },
+      });
       res
         .status(200)
         .json({ message: 'Account billing modified successfully' });

@@ -8,7 +8,7 @@ export async function fetchAddress(
     const addressData = await addressResponse.json();
     //  console.log('addressData:', addressData);
     if (!addressData.ok) {
-      console.log('addressData:', addressData);
+      // console.log('addressData:', addressData);
     }
 
     return addressData;

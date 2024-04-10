@@ -76,7 +76,6 @@ const CardsPage: NextPageWithLayout<CardsPageProps> = ({
   const router = useRouter();
   const currentRoute = router.pathname;
   const newRoute = `${currentRoute}/new?id=${accountId}`;
-  console.log('cards:', cards);
   return (
     <div>
       <h2 className="mb-4 text-2xl font-bold">Cards</h2>

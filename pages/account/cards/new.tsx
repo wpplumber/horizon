@@ -147,9 +147,6 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
         const hundred = Math.floor(currentYear / 100);
         const [month, year] = formValues.expiration.split(' / ');
         const fullYear = `${hundred}${year}`;
-        console.log(
-          `form card:${formValues.cardNumber}, ${month}, ${fullYear}, ${formValues.cvc}`,
-        );
         const token = await createToken(
           formValues.cardNumber,
           month,
@@ -157,7 +154,6 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
           formValues.cvc,
           id.toString(),
         );
-        console.log('token created:', token);
 
         const formData = new FormData();
         formData.append('email', email);

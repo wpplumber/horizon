@@ -17,7 +17,6 @@ export default async function handler(
       limit: 25,
       page: 1,
     });
-    console.log('Swell account addresses response:', addresses);
 
     res.status(200).json(addresses.results);
   } catch (error) {

@@ -8,11 +8,9 @@ export default async function handler(
   try {
     const { id } = req.query;
     const swell = initSwell();
-    //  console.log('api/swell/addresses/[id] called!');
 
     if (req.method === 'GET') {
       const address = await swell.get(`/accounts:addresses/${id}`);
-      //  console.log('Swell account addresses response:', address);
 
       res.status(200).json(address);
     } else if (req.method === 'POST') {
@@ -37,7 +35,6 @@ export default async function handler(
         parent_id: id,
         active: isDefault,
       });
-      console.log('address to add for billing', addedAddress);
       res.status(200).json({ billing: addedAddress });
     } else if (req.method === 'PUT') {
       const {
@@ -61,7 +58,6 @@ export default async function handler(
         // parent_id: id,
         active: isDefault,
       });
-      console.log('address to update for billing', updatedAddress);
       res.status(200).json({ billing: updatedAddress });
     } else if (req.method === 'DELETE') {
       // Logic to delete an address by its ID
