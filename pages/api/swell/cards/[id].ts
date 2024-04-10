@@ -16,16 +16,13 @@ export default async function handler(
 
       res.status(200).json(card);
     } else if (req.method === 'POST') {
-      const { email, isDefault } = req.body;
+      const { email, token } = req.body;
+      console.log('req body', req.body);
+      console.log(`email: ${email}, token: ${token}, id: ${id}`);
       const addedCard = await swell.post(`/accounts:cards`, {
         email,
-        brand: 'Visa',
-        last4: '1234',
-        exp_month: 10,
-        exp_year: 2024,
-        test: true,
+        token,
         parent_id: id,
-        active: isDefault,
       });
       console.log('card to add for billing', addedCard);
       res.status(200).json({ billing: addedCard });

@@ -3,7 +3,7 @@ import { BUTTON_TYPE, BUTTON_STYLE } from 'types/shared/button';
 import Button from './atoms/Button';
 import useNotificationStore from 'stores/notification';
 import { NOTIFICATION_TYPE } from 'types/shared/notification';
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import type { SpecialCard } from 'pages/account/cards';
 import { useCardContext } from 'utils/contexts/cardContext';
 
@@ -55,30 +55,30 @@ const Card: React.FC<CardProps> = ({ card }) => {
     }
   };
 
-  const router = useRouter();
-  const currentRoute = router.pathname;
+  // const router = useRouter();
+  // const currentRoute = router.pathname;
 
   return (
     <div className="space-y-12 md:mt-12">
       <div className="border-outline relative rounded-xl border bg-background-primary p-6">
-        <div className="text-lg font-bold">
+        <div className="mb-2 text-lg font-bold">
           {card.brand} ending in {card.last4}
         </div>
-        <div>{card.billing?.name}</div>
+        {/* <div>{card.billing?.name}</div>
         <div>{card.billing?.address1}</div>
         {card.billing?.address2 && <div>{card.billing?.address2}</div>}
         <div>
           {card.billing?.city}, {card.billing?.state} {card.billing?.zip}
         </div>
         <div>{card.billing?.country}</div>
-        {card.billing?.phone && <div>Phone: {card.billing.phone}</div>}
+        {card.billing?.phone && <div>Phone: {card.billing.phone}</div>} */}
         {card.default && (
           <span className="text-white rounded-md bg-success-light px-2 py-1">
             default
           </span>
         )}
         <div className="absolute bottom-2 right-0 mr-2 mt-2 flex space-x-2">
-          <Button
+          {/* <Button
             elType={BUTTON_TYPE.LINK}
             href={`${currentRoute}/edit?id=${card.id}&isDefault=${card.default}`}
             onClick={() => null}
@@ -86,7 +86,7 @@ const Card: React.FC<CardProps> = ({ card }) => {
             small
             className="mt-4 w-full whitespace-nowrap text-center md:mt-0 md:w-auto">
             Edit
-          </Button>
+          </Button> */}
           <Button
             elType={BUTTON_TYPE.BUTTON}
             onClick={() => handleDelete(card.id)}

@@ -22,6 +22,7 @@ import { setDefaultCard, submitCardForm } from 'utils/views/cards';
 import { getClientWithSessionToken } from 'lib/graphql/client';
 import { ACCOUNT_FIELD } from 'types/account';
 import ValidationErrorText from 'components/atoms/ValidationErrorText';
+import { createToken } from 'utils/api/createToken';
 
 interface NewPageProps extends PageProps, AccountPageProps {
   email: string | null | undefined;
@@ -79,6 +80,30 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  function handleCardNumberInput(event: React.ChangeEvent<HTMLInputElement>) {
+    const input = event.target;
+    const value = input.value.replace(/\D/g, '').substring(0, 16);
+
+    input.value = value.replace(/(\d{4})(\d{4})(\d{4})(\d{4})/, '$1 $2 $3 $4');
+  }
+
+  function handleExpirationInput(event: React.ChangeEvent<HTMLInputElement>) {
+    const input = event.target;
+    const value = input.value.replace(/\D/g, '').substring(0, 4);
+
+    if (value.length > 2) {
+      input.value = value.replace(/(\d{2})(\d{2})/, '$1 / $2');
+    } else {
+      input.value = value;
+    }
+  }
+
+  function handleCvcInput(event: React.ChangeEvent<HTMLInputElement>) {
+    const input = event.target;
+    const value = input.value.replace(/\D/g, '').substring(0, 3);
+    input.value = value;
+  }
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({
@@ -117,13 +142,28 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
     try {
       if (email && id) {
         formValues.email = email?.toString();
+
+        const currentYear = new Date().getFullYear();
+        const hundred = Math.floor(currentYear / 100);
+        const [month, year] = formValues.expiration.split(' / ');
+        const fullYear = `${hundred}${year}`;
+        console.log(
+          `form card:${formValues.cardNumber}, ${month}, ${fullYear}, ${formValues.cvc}`,
+        );
+        const token = await createToken(
+          formValues.cardNumber,
+          month,
+          fullYear,
+          formValues.cvc,
+          id.toString(),
+        );
+        console.log('token created:', token);
+
         const formData = new FormData();
         formData.append('email', email);
-        formData.append('cardNumber', formValues.cardNumber);
-        formData.append('expiration', formValues.expiration);
-        formData.append('cvc', formValues.cvc);
-        formData.append('isDefault', formValues.isDefault.toString());
-        const response = await submitCardForm(formData, id.toString());
+        formData.append('token', token);
+
+        const response = await submitCardForm(token, email, id.toString());
 
         send({
           message: 'Card created with Success',
@@ -203,6 +243,7 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
                     placeholder="#### #### #### ####"
                     value={formValues.cardNumber}
                     onChange={(e) => {
+                      handleCardNumberInput(e);
                       handleChange(e);
                     }}
                     name="cardNumber"
@@ -232,7 +273,7 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
                     placeholder="MM / YY"
                     value={formValues.expiration}
                     onChange={(e) => {
-                      setError(undefined);
+                      handleExpirationInput(e);
                       handleChange(e);
                     }}
                     name="expiration"
@@ -258,7 +299,10 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
                     error={cvcError}
                     placeholder="***"
                     value={formValues.cvc}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleCvcInput(e);
+                      handleChange(e);
+                    }}
                     name="cvc"
                   />
 

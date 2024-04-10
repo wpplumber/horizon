@@ -1,11 +1,11 @@
-export async function submitCardForm(formData: FormData, id: string) {
+export async function submitCardForm(token: string, email: string, id: string) {
   try {
     const response = await fetch(`/api/swell/cards/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(formData),
+      body: JSON.stringify({ token, email }),
     });
 
     if (!response.ok) {

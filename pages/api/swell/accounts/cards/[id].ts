@@ -43,7 +43,7 @@ export default async function handler(
         `/accounts/${newCard.parent_id}`,
         {
           email: newCard.email,
-          $set: { billing: newCard },
+          $set: { 'billing.account_card_id': req.body.id },
         },
       );
       console.log('Update account to add for billing', accountModified);

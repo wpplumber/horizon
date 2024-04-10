@@ -30,6 +30,12 @@ interface EditPageProps extends PageProps, AccountPageProps {
 }
 
 export const propsCallback: GetServerSideProps<EditPageProps> = async (ctx) => {
+  return {
+    redirect: {
+      destination: '/account/cards', // Destination URL for the redirect
+      permanent: false, // Set to true for permanent redirects (HTTP 301), false for temporary redirects (HTTP 302)
+    },
+  };
   const { locale } = ctx;
   const client = getClientWithSessionToken(ctx.req.cookies);
   const {
@@ -40,12 +46,12 @@ export const propsCallback: GetServerSideProps<EditPageProps> = async (ctx) => {
     return {
       props: {
         email,
-        pageType: 'addresses',
+        pageType: 'cards',
         ...(locale ? { locale } : {}),
       },
     };
   } catch (error) {
-    console.error('Error fetching addresses:', error);
+    console.error('Error fetching cards:', error);
     return {
       notFound: true,
     };

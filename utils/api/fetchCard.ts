@@ -6,7 +6,6 @@ export async function fetchCard(
   try {
     const cardResponse = await fetch(`/api/swell/cards/${id}`);
     const cardData = await cardResponse.json();
-    //  console.log('addressData:', addressData);
     if (!cardData.ok) {
       console.log('cardData:', cardData);
     }
