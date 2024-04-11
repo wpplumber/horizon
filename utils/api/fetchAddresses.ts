@@ -1,3 +1,4 @@
+import { API_BASE_URL } from 'config';
 import type { SpecialAddress } from 'pages/account/addresses';
 
 export async function fetchAddresses(
@@ -5,7 +6,7 @@ export async function fetchAddresses(
 ): Promise<SpecialAddress[]> {
   try {
     const addressesResponse = await fetch(
-      `http://localhost:3000/api/swell/addresses/list?id=${accountId}`,
+      `${API_BASE_URL}/api/swell/addresses/list?id=${accountId}`,
     );
     const addressesData = await addressesResponse.json();
 

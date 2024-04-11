@@ -1,6 +1,8 @@
+import { API_BASE_URL } from 'config';
+
 export async function submitAddressForm(formData: FormData, id: string) {
   try {
-    const response = await fetch(`/api/swell/addresses/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/api/swell/addresses/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -21,7 +23,7 @@ export async function submitAddressForm(formData: FormData, id: string) {
 
 export async function updateAddressForm(formData: FormData, id: string) {
   try {
-    const response = await fetch(`/api/swell/addresses/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/api/swell/addresses/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +44,7 @@ export async function updateAddressForm(formData: FormData, id: string) {
 
 export async function setDefaultAddress(formData: FormData, id: string) {
   try {
-    const response = await fetch(`/api/swell/accounts/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/api/swell/accounts/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

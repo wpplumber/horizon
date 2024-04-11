@@ -1,6 +1,8 @@
+import { API_BASE_URL } from 'config';
+
 export async function submitCardForm(token: string, email: string, id: string) {
   try {
-    const response = await fetch(`/api/swell/cards/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/api/swell/cards/${id}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -21,7 +23,7 @@ export async function submitCardForm(token: string, email: string, id: string) {
 
 export async function updateCardForm(formData: FormData, id: string) {
   try {
-    const response = await fetch(`/api/swell/cards/${id}`, {
+    const response = await fetch(`${API_BASE_URL}/api/swell/cards/${id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -42,13 +44,16 @@ export async function updateCardForm(formData: FormData, id: string) {
 
 export async function setDefaultCard(formData: FormData, id: string) {
   try {
-    const response = await fetch(`/api/swell/accounts/cards/${id}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      `${API_BASE_URL}/api/swell/accounts/cards/${id}`,
+      {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       },
-      body: JSON.stringify(formData),
-    });
+    );
 
     if (!response.ok) {
       throw new Error('Failed to submit form');

@@ -6,6 +6,7 @@ import { NOTIFICATION_TYPE } from 'types/shared/notification';
 // import { useRouter } from 'next/router';
 import type { SpecialCard } from 'pages/account/cards';
 import { useCardContext } from 'utils/contexts/cardContext';
+import { API_BASE_URL } from 'config';
 
 interface CardProps {
   card: SpecialCard;
@@ -25,7 +26,7 @@ const Card: React.FC<CardProps> = ({ card }) => {
         return;
       }
 
-      const response = await fetch(`/api/swell/cards/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/api/swell/cards/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',

@@ -1,9 +1,10 @@
+import { API_BASE_URL } from 'config';
 import type { Account } from 'swell-js';
 
 export async function fetchAccount(email: string): Promise<Account> {
   try {
     const accountResponse = await fetch(
-      `http://localhost:3000/api/swell/accounts/${encodeURIComponent(email)}`,
+      `${API_BASE_URL}/api/swell/accounts/${encodeURIComponent(email)}`,
     );
     const accountData = await accountResponse.json();
 

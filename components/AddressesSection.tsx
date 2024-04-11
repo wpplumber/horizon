@@ -6,6 +6,7 @@ import { NOTIFICATION_TYPE } from 'types/shared/notification';
 import { useAddressContext } from 'utils/contexts/addressContext';
 import { useRouter } from 'next/router';
 import type { SpecialAddress } from 'pages/account/addresses';
+import { API_BASE_URL } from 'config';
 
 interface AddressProps {
   address: SpecialAddress;
@@ -25,12 +26,15 @@ const AddressCard: React.FC<AddressProps> = ({ address }) => {
         return;
       }
 
-      const response = await fetch(`/api/swell/addresses/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
+      const response = await fetch(
+        `${API_BASE_URL}/api/swell/addresses/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+          },
         },
-      });
+      );
 
       if (response.ok) {
         send({

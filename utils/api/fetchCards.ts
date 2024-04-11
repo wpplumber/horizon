@@ -1,3 +1,4 @@
+import { API_BASE_URL } from 'config';
 import type { SpecialCard } from 'pages/account/cards';
 
 export async function fetchCards(
@@ -5,7 +6,7 @@ export async function fetchCards(
 ): Promise<SpecialCard[]> {
   try {
     const cardsResponse = await fetch(
-      `http://localhost:3000/api/swell/cards/list?id=${accountId}`,
+      `${API_BASE_URL}/api/swell/cards/list?id=${accountId}`,
     );
     const cardsData = await cardsResponse.json();
 
