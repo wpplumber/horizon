@@ -55,7 +55,6 @@ export default async function handler(
         address1,
         city,
         country,
-        // parent_id: id,
         active: isDefault,
       });
       res.status(200).json({ billing: updatedAddress });

@@ -1,6 +1,6 @@
 import { API_BASE_URL } from 'config';
 
-export async function submitAddressForm(formData: FormData, id: string) {
+export async function submitAddressForm(formData: any, id: string) {
   try {
     const response = await fetch(`${API_BASE_URL}/api/swell/addresses/${id}`, {
       method: 'POST',
@@ -21,7 +21,7 @@ export async function submitAddressForm(formData: FormData, id: string) {
   }
 }
 
-export async function updateAddressForm(formData: FormData, id: string) {
+export async function updateAddressForm(formData: any, id: string) {
   try {
     const response = await fetch(`${API_BASE_URL}/api/swell/addresses/${id}`, {
       method: 'PUT',

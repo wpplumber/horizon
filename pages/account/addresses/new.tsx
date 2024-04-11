@@ -85,7 +85,9 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({
       ...prevValues,
@@ -116,16 +118,7 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
     try {
       if (email && id) {
         formValues.email = email;
-        const formData = new FormData();
-        formData.append('email', formValues.email);
-        formData.append('zip', formValues.zip);
-        formData.append('firstName', formValues.firstName);
-        formData.append('lastName', formValues.lastName);
-        formData.append('address1', formValues.address1);
-        formData.append('city', formValues.city);
-        formData.append('country', formValues.country);
-        formData.append('isDefault', formValues.isDefault.toString());
-        const response = await submitAddressForm(formData, id?.toString());
+        const response = await submitAddressForm(formValues, id?.toString());
 
         send({
           message: 'Address created with Success',
@@ -251,7 +244,6 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
                     error={addressError}
                     value={formValues.address1}
                     onChange={(e) => {
-                      setError(undefined);
                       handleChange(e);
                     }}
                     name="address1"
@@ -273,7 +265,9 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
                     type="text"
                     aria-required
                     value={formValues.zip}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     name="zip"
                   />
                 </p>
@@ -290,7 +284,9 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
                     type="text"
                     aria-required
                     value={formValues.city}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     name="city"
                   />
                 </p>
@@ -307,9 +303,8 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
                     aria-invalid={countryError}
                     aria-errormessage={countryError ? error.message : undefined}
                     value={formValues.country}
-                    onChange={() => {
-                      setError(undefined);
-                      handleChange;
+                    onChange={(e) => {
+                      handleChange(e);
                     }}
                     name="country">
                     <option value=""></option>

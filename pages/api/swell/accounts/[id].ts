@@ -37,7 +37,7 @@ export default async function handler(
     } else if (req.method === 'PUT') {
       const newAddress = req.body;
       await swell.put(`/accounts/${newAddress.parent_id}`, {
-        // email: newAddress.email,
+        email: newAddress.email,
         $set: { shipping: newAddress },
       });
       res

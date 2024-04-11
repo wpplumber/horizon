@@ -147,20 +147,28 @@ const NewPage: NextPageWithLayout<NewPageProps> = ({ email }) => {
         const hundred = Math.floor(currentYear / 100);
         const [month, year] = formValues.expiration.split(' / ');
         const fullYear = `${hundred}${year}`;
-        const token = await createToken(
+        const responseToken = await createToken(
           formValues.cardNumber,
           month,
           fullYear,
           formValues.cvc,
           id.toString(),
         );
-
-        const formData = new FormData();
-        formData.append('email', email);
-        formData.append('token', token);
-
-        const response = await submitCardForm(token, email, id.toString());
-
+        console.log(
+          `token:${responseToken.token}, email:${email}, id:${id.toString()}`,
+        );
+        const response = await submitCardForm(
+          responseToken.token,
+          email,
+          id.toString(),
+        );
+        if (response && response.billing.errors) {
+          send({
+            message: response.billing.errors.gateway.message,
+            type: NOTIFICATION_TYPE.ERROR,
+          });
+          return;
+        }
         send({
           message: 'Card created with Success',
           type: NOTIFICATION_TYPE.SUCCESS,

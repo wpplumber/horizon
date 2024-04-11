@@ -28,7 +28,7 @@ export async function createToken(
     //   console.log('cardData:', cardData);
     // }
     //  console.log('Create token response:', cardData.token);
-    return cardResponse.token;
+    return cardResponse;
   } catch (error) {
     console.error('Error fetching card:', error);
     // throw error;

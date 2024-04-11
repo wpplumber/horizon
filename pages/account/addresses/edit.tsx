@@ -96,8 +96,8 @@ const EditPage: NextPageWithLayout<EditPageProps> = ({ email }) => {
           const updatedFormValues = {
             email: '',
             zip: data.zip ?? '',
-            firstName: data.firstName ?? '',
-            lastName: data.lastName ?? '',
+            firstName: data.first_name ?? '',
+            lastName: data.last_name ?? '',
             address1: data.address1 ?? '',
             city: data.city ?? '',
             country: data.country ?? '',
@@ -111,9 +111,11 @@ const EditPage: NextPageWithLayout<EditPageProps> = ({ email }) => {
     };
 
     getAddress(); // Call the fetchAddress function, not recursively
-  }, [_default, id]);
+  }, [id]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setFormValues((prevValues) => ({
       ...prevValues,
@@ -144,16 +146,7 @@ const EditPage: NextPageWithLayout<EditPageProps> = ({ email }) => {
     try {
       if (email && id) {
         formValues.email = email;
-        const formData = new FormData();
-        formData.append('email', '');
-        formData.append('zip', formValues.zip);
-        formData.append('firstName', formValues.firstName);
-        formData.append('lastName', formValues.lastName);
-        formData.append('address1', formValues.address1);
-        formData.append('city', formValues.city);
-        formData.append('country', formValues.country);
-        formData.append('isDefault', formValues.isDefault.toString());
-        const response = await updateAddressForm(formData, id?.toString());
+        const response = await updateAddressForm(formValues, id?.toString());
 
         send({
           message: 'Address updated with Success',
@@ -230,7 +223,9 @@ const EditPage: NextPageWithLayout<EditPageProps> = ({ email }) => {
                     type="text"
                     aria-required
                     value={formValues.firstName}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     name="firstName"
                   />
                 </p>
@@ -245,7 +240,9 @@ const EditPage: NextPageWithLayout<EditPageProps> = ({ email }) => {
                     type="text"
                     aria-required
                     value={formValues.lastName}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     name="lastName"
                   />
                 </p>
@@ -265,9 +262,8 @@ const EditPage: NextPageWithLayout<EditPageProps> = ({ email }) => {
                     aria-errormessage={addressError ? error.message : undefined}
                     error={addressError}
                     value={formValues.address1}
-                    onChange={() => {
-                      setError(undefined);
-                      handleChange;
+                    onChange={(e) => {
+                      handleChange(e);
                     }}
                     name="address1"
                   />
@@ -288,7 +284,9 @@ const EditPage: NextPageWithLayout<EditPageProps> = ({ email }) => {
                     type="text"
                     aria-required
                     value={formValues.zip}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     name="zip"
                   />
                 </p>
@@ -305,7 +303,9 @@ const EditPage: NextPageWithLayout<EditPageProps> = ({ email }) => {
                     type="text"
                     aria-required
                     value={formValues.city}
-                    onChange={handleChange}
+                    onChange={(e) => {
+                      handleChange(e);
+                    }}
                     name="city"
                   />
                 </p>
@@ -322,9 +322,8 @@ const EditPage: NextPageWithLayout<EditPageProps> = ({ email }) => {
                     aria-invalid={countryError}
                     aria-errormessage={countryError ? error.message : undefined}
                     value={formValues.country}
-                    onChange={() => {
-                      setError(undefined);
-                      handleChange;
+                    onChange={(e) => {
+                      handleChange(e);
                     }}
                     name="country">
                     <option value=""></option>
@@ -346,7 +345,9 @@ const EditPage: NextPageWithLayout<EditPageProps> = ({ email }) => {
                   id="set-address"
                   name="isDefault"
                   value={0}
-                  onChange={handleCheckboxChange}
+                  onChange={(e) => {
+                    handleCheckboxChange(e);
+                  }}
                   type="checkbox"
                   className="border-gray-400 mr-2 flex h-6 w-6 items-center justify-center rounded-md border"
                   checked={formValues.isDefault}
