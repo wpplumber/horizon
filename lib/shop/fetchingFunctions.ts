@@ -69,10 +69,25 @@ export const getCategories = async (currentSlug?: string) => {
     return categoryData;
   });
 
+  // const settings: ProductsLayoutSettings = {
+  //   featuredCategories: denullifyArray(featuredCategoriesData),
+  //   productsPerRow:
+  //     (categoriesList[0]?.content?.productsPerRow as ProductsPerRow) ?? 3,
+  //   enableQuickAdd: categoriesList[0]?.content?.enableQuickAdd ?? false,
+  //   showFeaturedCategories:
+  //     categoriesList[0]?.content?.showFeaturedCategories ?? false,
+  //   showProductsDescription:
+  //     categoriesList[0]?.content?.showProductsDescription ?? false,
+  //   showProductsPrice: categoriesList[0]?.content?.showProductsPrice ?? false,
+  // };
+
+  const productsPerRowValue = categoriesList[0]?.content?.productsPerRow;
+  const productsPerRow: ProductsPerRow =
+    typeof productsPerRowValue === 'number' ? productsPerRowValue : 3;
+
   const settings: ProductsLayoutSettings = {
     featuredCategories: denullifyArray(featuredCategoriesData),
-    productsPerRow:
-      (categoriesList[0]?.content?.productsPerRow as ProductsPerRow) ?? 3,
+    productsPerRow: productsPerRow,
     enableQuickAdd: categoriesList[0]?.content?.enableQuickAdd ?? false,
     showFeaturedCategories:
       categoriesList[0]?.content?.showFeaturedCategories ?? false,
