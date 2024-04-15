@@ -2,10 +2,6 @@
   "name": "@swell/horizon",
   "version": "0.5.0",
   "private": true,
-  "engines": {
-    "node": "16.20",
-    "npm": ">=8"
-  },
   "scripts": {
     "dev": "yarn setup && next dev",
     "generate": "yarn build",
